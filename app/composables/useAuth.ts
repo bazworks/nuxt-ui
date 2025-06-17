@@ -3,10 +3,18 @@ interface LoginResponse {
   refresh: string;
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  errors?: Record<string, string[]>;
+  message?: string;
+  data: T;
+}
+
 export function useAuth<T extends LoginResponse = LoginResponse>() {
   const accessToken = useCookie("access_token");
   const refreshToken = useCookie("refresh_token");
   const ui = useUiStore();
+  const { apiFetch } = useApi();
 
   const login = async (
     loginUrl: string,
@@ -14,21 +22,16 @@ export function useAuth<T extends LoginResponse = LoginResponse>() {
   ) => {
     ui.setLoading(true);
     try {
-      const { data, success, errors } = await useApi()<T>(loginUrl, {
+      const { data, error } = await apiFetch<ApiResponse<T>>(loginUrl, {
         method: "POST",
         body: credentials,
       });
-      if (success && data) {
-        accessToken.value = data.access;
-        refreshToken.value = data.refresh;
+      console.log("data", data, error);
+      if (data?.data) {
+        accessToken.value = data.data.access;
+        refreshToken.value = data.data.refresh;
         return true;
-      } else {
-        showErrorToast(errors);
-        return false;
       }
-    } catch (err: unknown) {
-      showErrorToast(err instanceof Error ? err.message : "Unknown error");
-      return false;
     } finally {
       ui.setLoading(false);
     }
@@ -43,24 +46,4 @@ export function useAuth<T extends LoginResponse = LoginResponse>() {
   const isAuthenticated = computed(() => !!accessToken.value);
 
   return { login, logout, isAuthenticated };
-}
-
-function showErrorToast(res: string[] | string | undefined) {
-  if (import.meta.client) {
-    if (Array.isArray(res) && res.length > 0) {
-      res.forEach((error: string) => {
-        useToast().add({
-          title: "Error",
-          description: error,
-          color: "error",
-        });
-      });
-    } else {
-      useToast().add({
-        title: "Error",
-        description: (res as string) || "Unexpected error",
-        color: "error",
-      });
-    }
-  }
 }

@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import path from "path";
 
 export default defineNuxtConfig({
   // compatibility version 4 is required for the app directory and the relative paths are now based on ~ which points to the app directory
@@ -8,7 +7,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-11-01",
 
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   modules: [
     "@nuxt/eslint",
@@ -27,8 +26,9 @@ export default defineNuxtConfig({
     preference: "light",
   },
   runtimeConfig: {
+    API_BASE_URL: process.env.API_BASE_URL,
     public: {
-      API_BASE_URL: process.env.API_BASE_URL || "/api",
+      API_BASE_URL: process.env.API_BASE_URL,
     },
   },
 });

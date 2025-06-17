@@ -1,225 +1,174 @@
-# Nuxt UI Starter Template
+# Nuxt UI Template
 
-A feature-rich starter template for Nuxt 3 applications with Nuxt UI, TailwindCSS, and various additional setup features.
+A modern Nuxt 3 template with UI components, authentication, and best practices.
 
-## 🚀 Features
+## Features
 
-### Core Technologies
+- 🎨 **UI Framework**: Built with [Nuxt UI](https://ui.nuxt.com/) for beautiful, accessible components
+- 🔐 **Authentication**: JWT-based authentication with persistent sessions
+- 📊 **Data Tables**: Smart table component with sorting, filtering, and pagination
+- 📝 **Form Validation**: Form handling with VeeValidate and Zod
+- 🎯 **Type Safety**: Full TypeScript support
+- 🎨 **Icons**: Heroicons integration
+- 📱 **Responsive**: Mobile-first design
+- 🎨 **Theme**: Light mode by default with dark mode support
 
-- Nuxt 3
-- Nuxt UI
-- TailwindCSS
-- TypeScript
-- Pinia (State Management)
-- Vue 3
+## Tech Stack
 
-### Installed Modules
+- [Nuxt 3](https://nuxt.com/) - The Vue Framework
+- [Nuxt UI](https://ui.nuxt.com/) - UI Components
+- [Pinia](https://pinia.vuejs.org/) - State Management
+- [VeeValidate](https://vee-validate.logaretm.com/) - Form Validation
+- [Zod](https://zod.dev/) - Schema Validation
+- [TanStack Table](https://tanstack.com/table) - Table Management
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
 
-- `@nuxt/eslint` - ESLint integration
-- `@nuxt/image` - Image optimization
-- `@nuxt/ui` - UI components
-- `@nuxt/fonts` - Font optimization
-- `@nuxt/icon` - Icon support
-- `@pinia/nuxt` - Pinia integration
-- `pinia-plugin-persistedstate` - State persistence
-- `@tanstack/vue-table` - Table functionality
-- `vee-validate` with `zod` - Form validation
+## Installed Modules
 
-## 📁 Project Structure
+The following Nuxt modules are installed and available for use:
+
+- `@nuxt/eslint` - ESLint integration for code quality
+- `@nuxt/image` - Image optimization and processing
+- `@nuxt/ui` - UI components and utilities
+- `@nuxt/fonts` - Font optimization and management
+- `@nuxt/icon` - Icon support with various icon sets
+- `@pinia/nuxt` - Pinia state management integration
+- `pinia-plugin-persistedstate/nuxt` - State persistence across page reloads
+
+## Core Composables
+
+### useApi
+
+A composable for handling API requests with built-in error handling and authentication:
+
+- Handles JWT token management
+- Provides both `apiFetch` and `apiUseFetch` methods
+- Automatic error handling with toast notifications
+- Type-safe responses
+- Handles both backend (DRF) and non-backend errors differently
+
+### useAuth
+
+Authentication composable for managing user sessions:
+
+- JWT token management
+- Login/logout functionality
+- Session persistence
+- Protected route handling
+- User profile management
+
+### useErrorFormatter
+
+Error handling composable for consistent error display:
+
+- Formats backend (DRF) errors
+- Handles non-backend errors
+- Provides toast notifications
+- Type-safe error handling
+
+## Example Pages
+
+Located in `app/pages/examples/`:
+
+- `login.vue` - Example login page with form validation
+- `testapi.vue` - API testing page
+- `index.vue` - Example dashboard layout
+
+## Local API Routes
+
+Located in `server/routes/local/`:
+
+- `profile.get.ts` - Example protected profile endpoint
+- `token.post.ts` - JWT token generation endpoint
+- `error.ts` - Error handling examples
+
+## Environment Setup
+
+Create a `.env` file with the following variables:
+
+```
+# Required for useApi composable
+API_BASE_URL=http://localhost:8000  # Your backend API URL
+
+# Required for session management
+NUXT_SESSION_PASSWORD=your-secure-password-here  # Used for session encryption
+
+# Optional environment variables
+NODE_ENV=development
+```
+
+## Project Structure
 
 ```
 ├── app/
-│   ├── assets/         # Static assets
-│   ├── components/     # Vue components
-│   ├── composables/    # Vue composables
-│   ├── layouts/        # Page layouts
-│   ├── middleware/     # Route middleware
-│   ├── pages/          # Application pages
-│   ├── plugins/        # Vue plugins
-│   ├── stores/         # Pinia stores
-│   └── types/          # TypeScript types
-├── server/
-│   └── api/           # Server API routes
-└── public/            # Public static files
+│   ├── assets/        # Static assets
+│   ├── components/    # Vue components
+│   │   ├── CoreSidebar/    # Sidebar components
+│   │   ├── Filter/         # Filter components
+│   │   └── Core*.vue       # Core UI components
+│   ├── composables/   # Vue composables
+│   │   ├── useApi.ts       # API client
+│   │   ├── useAuth.ts      # Authentication
+│   │   └── useErrorFormatter.ts # Error handling
+│   ├── layouts/       # Page layouts
+│   ├── middleware/    # Route middleware
+│   ├── pages/         # Application pages
+│   │   └── examples/  # Example pages
+│   ├── plugins/       # Vue plugins
+│   ├── stores/        # Pinia stores
+│   └── types/         # TypeScript types
+├── server/           # Server routes
+│   └── routes/       # API routes
+│       └── local/    # Local API endpoints
+├── public/           # Public assets
+└── utils/            # Utility functions
 ```
 
-## 🔧 Available Components
+## Core Components
 
-### Core Components
+- `CoreSmartTable`: Advanced data table with sorting, filtering, and pagination
+- `CoreFieldSelectMenu`: Enhanced select menu component
+- `CoreFileUploader`: File upload component with preview
+- `CoreConfirmDialog`: Reusable confirmation dialog
 
-- `CoreSidebar` - Sidebar navigation component
-- `CoreFieldSelectMenu` - Enhanced select menu component
-- `CoreFileUploader` - File upload component
-- `CoreSmartTable` - Advanced table component
-- `CoreConfirmDialog` - Confirmation dialog component
-
-### Filter Components
-
-Located in `app/components/Filter/` - Reusable filter components
-
-## 🎣 Composables
-
-### API Related
-
-- `useApi` - Base API composable
-- `useApiFetch` - Enhanced fetch composable with error handling and loading states
-- `useAuth` - Authentication composable
-
-## 🔐 Middleware
-
-Authentication and route protection middleware available in `app/middleware/`
-
-## 📡 Server API
-
-Example API routes and handlers in `server/api/`
-
-## 🎨 UI Features
-
-- Light/Dark mode support
-- Responsive design
-- Modern UI components from Nuxt UI
-- Customizable theme
-
-## 🛠️ Setup
+## Getting Started
 
 1. Clone the repository
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Copy `.env.example` to `.env` and configure your environment variables
+3. Copy `.env.example` to `.env` and configure your environment variables:
+   ```bash
+   cp .env.example .env
+   ```
 4. Start the development server:
    ```bash
    npm run dev
    ```
 
-## 📝 Environment Variables
-
-Required environment variables:
-
-- `API_BASE_URL` - Base URL for API requests (defaults to "/api")
-
-## 🚀 Available Scripts
+## Development
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run generate` - Generate static site
 - `npm run preview` - Preview production build
 
-## 🔧 Configuration
+## Best Practices
 
-The template uses Nuxt 3's configuration system. Key configurations can be found in:
+1. **Type Safety**: Use TypeScript for all new code
+2. **Component Structure**: Follow the Core\* prefix for base components
+3. **Error Handling**: Use the error formatter for consistent error messages
+4. **API Calls**: Use the useApi composable for all API requests
+5. **State Management**: Use Pinia stores for global state
+6. **Form Validation**: Use VeeValidate with Zod schemas
 
-- `nuxt.config.ts` - Main Nuxt configuration
-- `app.config.ts` - Application configuration
+## Contributing
 
-## 📚 Additional Features
+1. Create a feature branch
+2. Make your changes
+3. Submit a pull request
 
-- TypeScript support
-- ESLint configuration
-- Editor configuration
-- VS Code settings
-- Persistent state management with Pinia
-- Form validation with VeeValidate and Zod
-- Table management with TanStack Table
-- File upload capabilities
-- Smart table implementation
-- Confirmation dialogs
-- Field selection menus
+## License
 
-## 🎯 Best Practices
-
-- Follows Vue 3 Composition API patterns
-- Implements TypeScript for type safety
-- Uses Pinia for state management
-- Implements proper error handling
-- Follows DRY principles
-- Modular component structure
-- Reusable composables
-- Type-safe API calls
-
-## 📦 Dependencies
-
-All dependencies are listed in `package.json`. Key dependencies include:
-
-- Nuxt 3
-- Vue 3
-- Nuxt UI
-- Pinia
-- TypeScript
-- VeeValidate
-- Zod
-- TanStack Table
-
-## 🔐 Security
-
-- Environment variable management
-- API route protection
-- Authentication middleware
-- Secure file upload handling
-
-## 🎨 Styling
-
-- TailwindCSS for utility-first styling
-- Nuxt UI components
-- Custom CSS in `assets/css/main.css`
-- Responsive design patterns
-
-## 📱 Responsive Design
-
-The template is built with mobile-first approach and includes responsive components and layouts.
-
-## 🔄 State Management
-
-- Pinia for state management
-- Persistent state with `pinia-plugin-persistedstate`
-- Type-safe stores
-
-## 📝 Form Handling
-
-- VeeValidate for form validation
-- Zod for schema validation
-- Custom form components
-- File upload handling
-
-## 📊 Data Tables
-
-- TanStack Table integration
-- Smart table component with sorting, filtering, and pagination
-- Customizable table layouts
-
-## 🔐 Authentication
-
-- Authentication composable
-- Protected routes
-- Authentication middleware
-- Session management
-
-## 📦 File Structure
-
-The template follows a modular structure with clear separation of concerns:
-
-- Components for UI elements
-- Composables for reusable logic
-- Stores for state management
-- Pages for routes
-- Middleware for route protection
-- API routes for backend communication
-
-## 🚀 Getting Started
-
-1. Clone the repository
-2. Install dependencies
-3. Configure environment variables
-4. Start development server
-5. Begin building your application
-
-## 📚 Documentation
-
-For more information about the technologies used:
-
-- [Nuxt 3 Documentation](https://nuxt.com/docs)
-- [Nuxt UI Documentation](https://ui.nuxt.com)
-- [Vue 3 Documentation](https://vuejs.org)
-- [Pinia Documentation](https://pinia.vuejs.org)
-- [TailwindCSS Documentation](https://tailwindcss.com)
+MIT

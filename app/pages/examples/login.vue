@@ -9,8 +9,8 @@
       <div class="flex flex-col gap-4">
         <UInput
           v-model="email"
-          type="email"
-          placeholder="Email address"
+          type="text"
+          placeholder="Email"
           icon="i-heroicons-envelope"
           class="w-full"
         />
@@ -29,7 +29,13 @@
           </UButton>
         </div>
 
-        <UButton block color="primary" class="w-full" @click="submit">
+        <UButton
+          block
+          color="primary"
+          class="w-full"
+          @click="submit"
+          @keydown.enter="submit"
+        >
           Sign in
         </UButton>
       </div>
@@ -50,7 +56,7 @@ const password = ref("");
 const { login } = useAuth();
 
 const submit = async () => {
-  const success = await login("/token/", {
+  const success = await login("/local/token/", {
     email: email.value,
     password: password.value,
   });

@@ -1,5 +1,5 @@
 export default defineEventHandler((event) => {
-  const token = getHeader(event, "authorization");
+  const token = getHeader(event, "Authorization");
   console.log("token: in server profile.get", token);
   if (!token?.includes("mocked_access_token")) {
     return {

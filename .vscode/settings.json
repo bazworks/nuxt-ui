@@ -10,5 +10,6 @@
   "tailwindCSS.includeLanguages": {
     "vue": "html",
     "typescript": "javascript"
-  }
+  },
+  "editor.gotoLocation.multipleDefinitions": "goto"
 }
